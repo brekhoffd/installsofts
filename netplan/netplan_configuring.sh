@@ -49,21 +49,22 @@ read -p "Enter the remote DNS servers 2 (e.g. 8.8.4.4): " DNS_SERVER2
 # Create new Netplan configuration file:
 cat <<EOF > /etc/netplan/00-users-config.yaml
 network:
-  version: 2
-  ethernets:
-    $INTERFACE_NAME:
-      dhcp4: false
-      addresses:
-        - $STATIC_IP/$SUBNET_MASK
-      routes:
-        - to: default
-          via: $GATEWAY
-      nameservers:
-        search:
-          - netplanlab.local
-        addresses:
-          - $DNS_SERVER1
-          - $DNS_SERVER2
+    version: 2
+    ethernets:
+        $INTERFACE_NAME:
+            dhcp4: false
+            optional: true
+            addresses:
+              - $STATIC_IP/$SUBNET_MASK
+            routes:
+              - to: default
+                via: $GATEWAY
+            nameservers:
+                search:
+                  - netplanlab.local
+                addresses:
+                  - $DNS_SERVER1
+                  - $DNS_SERVER2
 EOF
 
 # Apply settings:
